@@ -1,4 +1,3 @@
-
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
@@ -23,10 +22,10 @@ end)
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -52,7 +51,27 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
+function CompileCPlusPlus()
+  -- Get the current file path in netrw
+  local filepath = vim.fn.expand('<cfile>')
+  if filepath == "" then
+    print("No file selected in the file explorer!")
+    return
+  end
+
+  local filedir = vim.fn.fnamemodify(filepath, ":h")   -- Directory of the selected file
+  local filename = vim.fn.fnamemodify(filepath, ":t:r") -- Filename without extension
+
+  -- Compile command
+  local compile_cmd = "g++ " .. filepath .. " -o " .. filedir .. "/" .. filename
+
+  -- Execute the compile command
+  vim.cmd('!cd ' .. filedir .. ' && ' .. compile_cmd)
+end
+
+vim.api.nvim_set_keymap('n', '<leader>c', ':lua CompileCPlusPlus()<CR>', { noremap = true, silent = true })
+
+
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
-

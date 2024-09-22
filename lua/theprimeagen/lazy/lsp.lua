@@ -85,8 +85,8 @@ return {
                 ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
+                { name = 'nvim_lsp' },
             }, {
                 { name = 'buffer' },
             })
@@ -95,7 +95,7 @@ return {
         vim.diagnostic.config({
             -- update_in_insert = true,
             float = {
-                focusable = false,
+                focusable = true,
                 style = "minimal",
                 border = "rounded",
                 source = "always",
