@@ -40,7 +40,7 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
+autocmd({ "BufWritePre" }, {
     group = ThePrimeagenGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
@@ -63,6 +63,15 @@ autocmd('LspAttach', {
     end
 })
 
+
+
+-- Set the internal encoding for Neovim to UTF-8
+vim.o.encoding = "utf-8"
+
+-- Set the default file encoding for new files to UTF-8
+vim.opt.fileencoding = "utf-8"
+vim.opt.clipboard = "unnamed"
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+vim.cmd("language en_US")

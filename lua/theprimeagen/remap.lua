@@ -42,13 +42,14 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+
 vim.keymap.set(
     "n",
     "<leader>ee",
     "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 )
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/theprimeagen/<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
 function CompileCPlusPlus()
@@ -69,9 +70,28 @@ function CompileCPlusPlus()
   vim.cmd('!cd ' .. filedir .. ' && ' .. compile_cmd)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>c', ':lua CompileCPlusPlus()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cpp', ':lua CompileCPlusPlus()<CR>', { noremap = true, silent = true })
+
+-- Keybinding to trigger quick fixes
+vim.api.nvim_set_keymap('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 
 
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+
+-- my stuff
+-- go to definition
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+-- go to next error
+vim.keymap.set("n", "<leader>ge", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Go to next diagnostic" })
+
+
+vim.keymap.set("i", "<C-'>", function()
+    return require("luasnip").jump(1)
+end, { expr = true })
+
+vim.keymap.set("s", "<C-'>", function()
+    return require("luasnip").jump(1)
+end, { expr = true })
+

@@ -51,7 +51,6 @@ return {
                     })
                     vim.g.zig_fmt_parse_errors = 0
                     vim.g.zig_fmt_autosave = 0
-
                 end,
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
@@ -71,6 +70,8 @@ return {
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        local luasnip = require('luasnip')
+
 
         cmp.setup({
             snippet = {
@@ -83,6 +84,13 @@ return {
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping(function(fallback)
+                    if luasnip.jumpable(1) then
+                        luasnip.jump(1)
+                    else
+                        fallback()
+                    end
+                end, { 'i', 's' }),
             }),
             sources = cmp.config.sources({
                 { name = 'luasnip' }, -- For luasnip users.
